@@ -1,30 +1,65 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { ScrollView, SafeAreaView } from 'react-native';
 import styled from 'styled-components';
 import Card from './components/Card';
+import { Icon } from 'expo';
+import { NotificationIcon } from './components/Icons';
 
 export default class App extends React.Component {
   render() {
     return (
       <Container>
-        <TitleBar>
-          <Avatar source={require('./assets/avatar.jpg')} />
-          <Title>Welome back, </Title>
-          <Name>Charles</Name>
-        </TitleBar>
-        <Subtitle>Contiune with Survey</Subtitle>
-        <Card />
+        <SafeAreaView>
+          <ScrollView style={{ height: '100%' }}>
+            <TitleBar>
+              <Avatar source={require('./assets/avatar.jpg')} />
+              <Title>Welome back, </Title>
+              <Name>Charles</Name>
+              <NotificationIcon
+                style={{ position: 'absolute', right: '20', top: '5' }}
+              />
+            </TitleBar>
+            <Subtitle>Contiune with Survey</Subtitle>
+            <ScrollView
+              horizontal={true}
+              style={{ paddingBottom: 30 }}
+              showsHorizontalScrollIndicator={false}
+            >
+              <Card
+                title="Styled Components"
+                image={require('./assets/background2.jpg')}
+                caption="React Native"
+                logo={require('./assets/logo-react.png')}
+                subtitle="5 of 12 sections"
+              />
+              <Card
+                title="Styled Component1.5"
+                image={require('./assets/background1.jpg')}
+                caption="React Native"
+                logo={require('./assets/logo-react.png')}
+                subtitle="5 of 12 sections"
+              />
+              <Card
+                title="Styled Components 2"
+                image={require('./assets/background2.jpg')}
+                caption="React Native"
+                logo={require('./assets/logo-react.png')}
+                subtitle="5 of 12 sections"
+              />
+            </ScrollView>
+          </ScrollView>
+        </SafeAreaView>
       </Container>
     );
   }
 }
 
 const Avatar = styled.Image`
-  width: 44px;
-  height: 44px;
+  width: 50px;
+  height: 50px;
   background: #000;
   margin-left: 20px;
-  border-radius: 50px;
+  border-radius: 25px;
   position: absolute;
   top: 0;
   left: 0;

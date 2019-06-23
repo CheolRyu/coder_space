@@ -5,13 +5,15 @@ const Card = props => {
   return (
     <Container>
       <Cover>
-        <Image source={require('../assets/background2.jpg')} />
-        <Title>Styled Component</Title>
+        <Image source={props.image} />
+        <Title>{props.title}</Title>
       </Cover>
       <Content>
-        <Logo source={require('../assets/logo-react.png')} />
-        <Caption>React Native</Caption>
-        <Subtitle>5 of 12 sections</Subtitle>
+        <Logo source={props.logo} />
+        <Wrapper>
+          <Caption>{props.caption}</Caption>
+          <Subtitle>{props.subtitle}</Subtitle>
+        </Wrapper>
       </Content>
     </Container>
   );
@@ -19,11 +21,32 @@ const Card = props => {
 
 export default Card;
 
-const Content = styled.View``;
-const Logo = styled.Image``;
+const Content = styled.View`
+  padding-left: 20px;
+  flex-direction: row;
+  align-items: center;
+  height: 80px;
+`;
+const Logo = styled.Image`
+  width: 44px;
+  height: 44px;
+`;
 
-const Caption = styled.Text``;
-const Subtitle = styled.Text``;
+const Caption = styled.Text`
+  color: #3c4560;
+  font-size: 20px;
+  font-weight: 600;
+`;
+const Subtitle = styled.Text`
+  color: #b8bece;
+  font-weight: 600;
+  font-size: 15px;
+  text-transform: uppercase;
+  margin-top: 4px;
+`;
+const Wrapper = styled.View`
+  margin-left: 10px;
+`;
 
 const Container = styled.View`
   background: white;
