@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Card from './components/Card';
 import { Icon } from 'expo';
 import { NotificationIcon } from './components/Icons';
+import Logo from './components/Logo';
 
 export default class App extends React.Component {
   render() {
@@ -16,36 +17,39 @@ export default class App extends React.Component {
               <Title>Welome back, </Title>
               <Name>Charles</Name>
               <NotificationIcon
-                style={{ position: 'absolute', right: '20', top: '5' }}
+                style={{ position: 'absolute', right: 20, top: 5 }}
               />
             </TitleBar>
+            <ScrollView
+              horizontal={true}
+              style={{
+                flexDirection: 'row',
+                padding: 20,
+                paddingLeft: 12,
+                paddingTop: 30
+              }}
+              showsHorizontalScrollIndicator={false}
+            >
+              {logos.map((logo, index) => (
+                <Logo image={logo.image} text={logo.text} key={index} />
+              ))}
+            </ScrollView>
             <Subtitle>Contiune with Survey</Subtitle>
             <ScrollView
               horizontal={true}
               style={{ paddingBottom: 30 }}
               showsHorizontalScrollIndicator={false}
             >
-              <Card
-                title="Styled Components"
-                image={require('./assets/background2.jpg')}
-                caption="React Native"
-                logo={require('./assets/logo-react.png')}
-                subtitle="5 of 12 sections"
-              />
-              <Card
-                title="Styled Component1.5"
-                image={require('./assets/background1.jpg')}
-                caption="React Native"
-                logo={require('./assets/logo-react.png')}
-                subtitle="5 of 12 sections"
-              />
-              <Card
-                title="Styled Components 2"
-                image={require('./assets/background2.jpg')}
-                caption="React Native"
-                logo={require('./assets/logo-react.png')}
-                subtitle="5 of 12 sections"
-              />
+              {cards.map((card, index) => (
+                <Card
+                  title={card.title}
+                  image={card.image}
+                  caption={card.caption}
+                  logo={card.logo}
+                  subtitle={card.subtitle}
+                  key={index}
+                />
+              ))}
             </ScrollView>
           </ScrollView>
         </SafeAreaView>
@@ -70,7 +74,7 @@ const Subtitle = styled.Text`
   font-weight: 600;
   font-size: 15px;
   margin-left: 20px;
-  margin-top: 50px;
+  margin-top: 20px;
   text-transform: uppercase;
 `;
 
@@ -94,3 +98,61 @@ const TitleBar = styled.View`
   margin-top: 50px;
   padding-left: 80px;
 `;
+
+const logos = [
+  {
+    image: require('./assets/logo-framerx.png'),
+    text: 'FrameX'
+  },
+  {
+    image: require('./assets/logo-figma.png'),
+    text: 'Figma'
+  },
+  {
+    image: require('./assets/logo-studio.png'),
+    text: 'Studio'
+  },
+  {
+    image: require('./assets/logo-react.png'),
+    text: 'React'
+  },
+  {
+    image: require('./assets/logo-swift.png'),
+    text: 'Swift'
+  },
+  {
+    image: require('./assets/logo-sketch.png'),
+    text: 'Sketch'
+  }
+];
+
+const cards = [
+  {
+    title: 'React Native for designers',
+    image: require('./assets/background11.jpg'),
+    subtitle: 'React Native',
+    caption: '1 of 5 section',
+    logo: require('./assets/logo-react.png')
+  },
+  {
+    title: 'Health advise',
+    image: require('./assets/background12.jpg'),
+    subtitle: 'menopause',
+    caption: '2 of 5 section',
+    logo: require('./assets/logo-react.png')
+  },
+  {
+    title: 'React Native for designers',
+    image: require('./assets/background13.jpg'),
+    subtitle: 'React Native',
+    caption: '3 of 5 section',
+    logo: require('./assets/logo-react.png')
+  },
+  {
+    title: 'React Native for designers',
+    image: require('./assets/background14.jpg'),
+    subtitle: 'React Native',
+    caption: '4 of 5 section',
+    logo: require('./assets/logo-react.png')
+  }
+];
