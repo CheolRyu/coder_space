@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Animated, TouchableOpacity, Dimensions } from 'react-native';
-import * as Icon from '@expo/vector-icons';
+import { Icon } from 'expo';
+import MenuItem from './MenuItem';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -10,17 +11,18 @@ class Menu extends Component {
     top: new Animated.Value(screenHeight)
   };
 
+  componentDidMount() {
+    Animated.spring(this.state.top, {
+      toValue: 0
+    }).start();
+  }
+
   toggleMenu = () => {
     Animated.spring(this.state.top, {
       toValue: screenHeight
     }).start();
   };
 
-  componentDidMount() {
-    Animated.spring(this.state.top, {
-      toValue: 0
-    }).start();
-  }
   render() {
     return (
       <AnimatedContainer style={{ top: this.state.top }}>
@@ -30,7 +32,7 @@ class Menu extends Component {
           <Subtitle>Personalized Wellness Advisor</Subtitle>
         </Cover>
         <TouchableOpacity
-          onPress={this.toggleMenu()}
+          onPress={this.toggleMenu}
           style={{
             position: 'absolute',
             top: 120,
@@ -43,7 +45,16 @@ class Menu extends Component {
             <Icon.Ionicons name="ios-close" size={44} color="#546bfb" />
           </CloseView>
         </TouchableOpacity>
-        <Content />
+        <Content>
+          {items.map((item, index) => (
+            <MenuItem
+              key={index}
+              icon={item.icon}
+              title={item.title}
+              text={item.text}
+            />
+          ))}
+        </Content>
       </AnimatedContainer>
     );
   }
@@ -93,4 +104,28 @@ const Cover = styled.View`
 const Content = styled.View`
   height: ${screenHeight};
   background: #f0f3f5;
+  padding: 50px;
 `;
+
+const items = [
+  {
+    icon: 'ios-settings',
+    title: 'Account',
+    text: 'settings'
+  },
+  {
+    icon: 'ios-card',
+    title: 'Billing',
+    text: 'payments'
+  },
+  {
+    icon: 'ios-compass',
+    title: 'Learn Menopause',
+    text: 'start course'
+  },
+  {
+    icon: 'ios-exit',
+    title: 'Log out',
+    text: 'See you soon'
+  }
+];
