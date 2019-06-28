@@ -89,7 +89,7 @@ class HomeScreen extends React.Component {
                   <Avatar />
                 </TouchableOpacity>
                 <Title>Welome back, </Title>
-                <Name>Charles Ryu</Name>
+                <Name>{this.props.name}</Name>
                 <NotificationIcon style={{ position: 'absolute', right: 20, top: 5 }} />
               </TitleBar>
               <ScrollView
