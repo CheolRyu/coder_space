@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import { connect } from 'react-redux';
 
 function mapStateToProps(state) {
@@ -18,18 +17,23 @@ function mapDispatchToProps(dispatch) {
       })
   };
 }
-class Avatar extends Component {
+class Avatar extends React.Component {
   state = {
-    photo: 'https://share.getcloudapp.com/Kouz6j2L'
+    photo: 'https://cl.ly/55da82beb939/download/avatar-default.jpg'
   };
 
-  componentDidMount = async () => {
-    const res = await axios.get('https://uinames.com/api/?ext');
-    const { name, photo } = res.data;
-    this.setState({ photo });
-    this.props.updateName(name);
-  };
+  componentDidMount() {
+    // eslint-disable-next-line no-undef
+    fetch('https://uinames.com/api/?ext')
+      .then(response => response.json())
+      .then(response => {
+        this.setState({
+          photo: response.photo
+        });
 
+        this.props.updateName(response.name);
+      });
+  }
   render() {
     return <Image source={{ uri: this.state.photo }} />;
   }
