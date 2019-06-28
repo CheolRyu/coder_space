@@ -1,10 +1,24 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Animated, TouchableOpacity, Dimensions } from 'react-native';
+import { connect } from 'react-redux';
 import { Icon } from 'expo';
 import MenuItem from './MenuItem';
 
 const screenHeight = Dimensions.get('window').height;
+
+function mapStateToProps(state) {
+  return { action: state.action };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    closeMenu: () =>
+      dispatch({
+        type: 'CLOSE_MENU'
+      })
+  };
+}
 
 class Menu extends Component {
   state = {
@@ -12,15 +26,25 @@ class Menu extends Component {
   };
 
   componentDidMount() {
-    Animated.spring(this.state.top, {
-      toValue: 0
-    }).start();
+    this.toggleMenu();
+  }
+
+  componentDidUpdate() {
+    this.toggleMenu();
   }
 
   toggleMenu = () => {
-    Animated.spring(this.state.top, {
-      toValue: screenHeight
-    }).start();
+    if (!this.props.action === 'openMenu') {
+      Animated.spring(this.state.top, {
+        toValue: 54
+      }).start();
+    }
+
+    if (!this.props.action === 'closeMenu') {
+      Animated.spring(this.state.top, {
+        toValue: screenHeight
+      }).start();
+    }
   };
 
   render() {
@@ -32,7 +56,7 @@ class Menu extends Component {
           <Subtitle>Personalized Wellness Advisor</Subtitle>
         </Cover>
         <TouchableOpacity
-          onPress={this.toggleMenu}
+          onPress={this.props.closeMenu}
           style={{
             position: 'absolute',
             top: 120,
@@ -47,12 +71,7 @@ class Menu extends Component {
         </TouchableOpacity>
         <Content>
           {items.map((item, index) => (
-            <MenuItem
-              key={index}
-              icon={item.icon}
-              title={item.title}
-              text={item.text}
-            />
+            <MenuItem key={index} icon={item.icon} title={item.title} text={item.text} />
           ))}
         </Content>
       </AnimatedContainer>
@@ -60,7 +79,10 @@ class Menu extends Component {
   }
 }
 
-export default Menu;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Menu);
 
 const Image = styled.Image`
   position: absolute;
@@ -92,9 +114,12 @@ const Container = styled.View`
   height: 100%;
   width: 100%;
   z-index: 100;
+  border-radius: 10px;
+  overflow: hidden;
 `;
 
 const AnimatedContainer = Animated.createAnimatedComponent(Container);
+
 const Cover = styled.View`
   height: 142px;
   background: #000;
