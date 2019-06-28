@@ -4,11 +4,18 @@ import { Provider } from 'react-redux';
 import HomeScreen from './screens/Homescreens';
 
 const INITIAL_STATE = {
-  action: 'openMenu'
+  action: ''
 };
 
-const reducer = (state = INITIAL_STATE) => {
-  return state;
+const reducer = (state = INITIAL_STATE, action) => {
+  switch (action.type) {
+    case 'OPEN_MENU':
+      return { action: 'openMenu' };
+    case 'CLOSE_MENU':
+      return { action: 'closeMenu' };
+    default:
+      return state;
+  }
 };
 
 const store = createStore(reducer);

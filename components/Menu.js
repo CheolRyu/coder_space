@@ -28,10 +28,14 @@ class Menu extends Component {
     this.toggleMenu();
   }
 
+  componentDidUpdate() {
+    this.toggleMenu();
+  }
+
   toggleMenu = () => {
     if (this.props.action == 'openMenu') {
       Animated.spring(this.state.top, {
-        toValue: 0
+        toValue: 54
       }).start();
     }
 
@@ -114,9 +118,12 @@ const Container = styled.View`
   height: 100%;
   width: 100%;
   z-index: 100;
+  border-radius: 10px;
+  overflow: hidden;
 `;
 
 const AnimatedContainer = Animated.createAnimatedComponent(Container);
+
 const Cover = styled.View`
   height: 142px;
   background: #000;
