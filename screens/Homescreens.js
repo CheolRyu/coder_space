@@ -7,17 +7,18 @@ import {
   Easing,
   StatusBar
 } from 'react-native';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Card from '../components/Card';
-import { Icon } from 'expo';
+
 import { NotificationIcon } from '../components/Icons';
 import Logo from '../components/Logo';
 import Course from '../components/Course';
 import Menu from '../components/Menu';
-import { connect } from 'react-redux';
+import Avatar from '../components/Avatar';
 
 function mapStateToProps(state) {
-  return { action: state.action };
+  return { action: state.action, name: state.name };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -43,7 +44,7 @@ class HomeScreen extends React.Component {
   }
 
   toggleMenu = () => {
-    if (this.props.action == 'openMenu') {
+    if (!this.props.action === 'openMenu') {
       Animated.timing(this.state.scale, {
         toValue: 0.9,
         duration: 300,
@@ -56,7 +57,7 @@ class HomeScreen extends React.Component {
       StatusBar.setBarStyle('light-content', true);
     }
 
-    if (this.props.action == 'closeMenu') {
+    if (!this.props.action === 'closeMenu') {
       Animated.timing(this.state.scale, {
         toValue: 1,
         duration: 300,
@@ -82,18 +83,16 @@ class HomeScreen extends React.Component {
               <TitleBar>
                 <TouchableOpacity
                   onPress={this.props.openMenu}
-                  style={{ position: 'absolute', top: 0, left: 7 }}
+                  style={{ position: 'absolute', top: 0, left: 20 }}
                 >
-                  <Avatar source={require('../assets/avatar.jpg')} />
+                  <Avatar />
                 </TouchableOpacity>
                 <Title>Welome back, </Title>
-                <Name>Charles</Name>
-                <NotificationIcon
-                  style={{ position: 'absolute', right: 20, top: 5 }}
-                />
+                <Name>{this.props.name}</Name>
+                <NotificationIcon style={{ position: 'absolute', right: 20, top: 5 }} />
               </TitleBar>
               <ScrollView
-                horizontal={true}
+                horizontal
                 style={{
                   flexDirection: 'row',
                   padding: 20,
@@ -108,7 +107,7 @@ class HomeScreen extends React.Component {
               </ScrollView>
               <Subtitle>Contiune with Survey</Subtitle>
               <ScrollView
-                horizontal={true}
+                horizontal
                 style={{ paddingBottom: 30 }}
                 showsHorizontalScrollIndicator={false}
               >
@@ -152,13 +151,6 @@ export default connect(
 const RootView = styled.View`
   background: #000;
   flex: 1;
-`;
-const Avatar = styled.Image`
-  width: 50px;
-  height: 50px;
-  background: #000;
-  margin-left: 20px;
-  border-radius: 25px;
 `;
 
 const Subtitle = styled.Text`
@@ -288,7 +280,6 @@ const courses = [
     logo: require('../assets/logo-figma.png'),
     author: 'Meng To',
     avatar: require('../assets/avatar.jpg'),
-    caption:
-      'Complete guide to designing a site using a collaborative design tool'
+    caption: 'Complete guide to designing a site using a collaborative design tool'
   }
 ];

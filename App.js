@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import HomeScreen from './screens/Homescreens';
 
 const INITIAL_STATE = {
-  action: ''
+  action: '',
+  name: ''
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -13,6 +14,8 @@ const reducer = (state = INITIAL_STATE, action) => {
       return { action: 'openMenu' };
     case 'CLOSE_MENU':
       return { action: 'closeMenu' };
+    case 'UPDATE_NAME':
+      return { name: action.name };
     default:
       return state;
   }

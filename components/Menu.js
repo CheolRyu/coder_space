@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Animated, TouchableOpacity, Dimensions } from 'react-native';
+import { connect } from 'react-redux';
 import { Icon } from 'expo';
 import MenuItem from './MenuItem';
-import { connect } from 'react-redux';
+
 const screenHeight = Dimensions.get('window').height;
 
 function mapStateToProps(state) {
@@ -33,13 +34,13 @@ class Menu extends Component {
   }
 
   toggleMenu = () => {
-    if (this.props.action == 'openMenu') {
+    if (!this.props.action === 'openMenu') {
       Animated.spring(this.state.top, {
         toValue: 54
       }).start();
     }
 
-    if (this.props.action == 'closeMenu') {
+    if (!this.props.action === 'closeMenu') {
       Animated.spring(this.state.top, {
         toValue: screenHeight
       }).start();
@@ -70,12 +71,7 @@ class Menu extends Component {
         </TouchableOpacity>
         <Content>
           {items.map((item, index) => (
-            <MenuItem
-              key={index}
-              icon={item.icon}
-              title={item.title}
-              text={item.text}
-            />
+            <MenuItem key={index} icon={item.icon} title={item.title} text={item.text} />
           ))}
         </Content>
       </AnimatedContainer>
