@@ -1,44 +1,28 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-import { connect } from 'react-redux';
+import { connect } from
 
-function mapStateToProps(state) {
-  return {
-    name: state.name
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    updateName: name =>
-      dispatch({
-        type: 'UPDATE_NAME',
-        name
-      })
-  };
-}
-class Avatar extends Component {
+class Avatar extends React.Component {
   state = {
-    photo: 'https://share.getcloudapp.com/Kouz6j2L'
+    photo: 'https://cl.ly/55da82beb939/download/avatar-default.jpg'
   };
 
-  componentDidMount = async () => {
-    const res = await axios.get('https://uinames.com/api/?ext');
-    const { name, photo } = res.data;
-    this.setState({ photo });
-    this.props.updateName(name);
-  };
-
+  componentDidMount() {
+    // eslint-disable-next-line no-undef
+    fetch('https://uinames.com/api/?ext')
+      .then(response => response.json())
+      .then(response => {
+        this.setState({
+          photo: response.photo
+        });
+      });
+  }
   render() {
     return <Image source={{ uri: this.state.photo }} />;
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Avatar);
+export default Avatar;
 
 const Image = styled.Image`
   width: 44px;

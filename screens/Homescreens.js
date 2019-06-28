@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import React from 'react';
 import {
   ScrollView,
@@ -44,7 +45,7 @@ class HomeScreen extends React.Component {
   }
 
   toggleMenu = () => {
-    if (!this.props.action === 'openMenu') {
+    if (this.props.action == 'openMenu') {
       Animated.timing(this.state.scale, {
         toValue: 0.9,
         duration: 300,
@@ -57,7 +58,7 @@ class HomeScreen extends React.Component {
       StatusBar.setBarStyle('light-content', true);
     }
 
-    if (!this.props.action === 'closeMenu') {
+    if (this.props.action == 'closeMenu') {
       Animated.timing(this.state.scale, {
         toValue: 1,
         duration: 300,
@@ -88,7 +89,7 @@ class HomeScreen extends React.Component {
                   <Avatar />
                 </TouchableOpacity>
                 <Title>Welome back, </Title>
-                <Name>{this.props.name}</Name>
+                <Name>Charles Ryu</Name>
                 <NotificationIcon style={{ position: 'absolute', right: 20, top: 5 }} />
               </TitleBar>
               <ScrollView
